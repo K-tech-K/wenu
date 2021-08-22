@@ -1,8 +1,35 @@
 class UsersController < ApplicationController
-  before_action :require_user_logged_in, except: [:new]
+  before_action :require_user_logged_in, except: [:new, :create]
   
   def show
-    @user = User.find(params[:id])
+    @user = current_user
+    @pagy, @menus = pagy(current_user.menus.order(id: :desc))
+    redirect_to signatures_user_url
+  end
+  
+  def signatures
+    @user = current_user
+    @pagy, @menus = pagy(current_user.menus.where(category: "Signature").order(id: :desc))
+  end
+  
+  def appetizers
+    @user = current_user
+    @pagy, @menus = pagy(current_user.menus.where(category: "Appetizer").order(id: :desc))
+  end
+
+  def mains
+    @user = current_user
+    @pagy, @menus = pagy(current_user.menus.where(category: "Main").order(id: :desc))
+  end
+
+  def sides
+    @user = current_user
+    @pagy, @menus = pagy(current_user.menus.where(category: "Side").order(id: :desc))
+  end
+
+  def bevarages
+    @user = current_user
+    @pagy, @menus = pagy(current_user.menus.where(category: "Bevarage").order(id: :desc))
   end
 
   def new
@@ -22,11 +49,11 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @user = User.find(params[:id])
+    @user = current_user
   end
 
   def update
-    @user = User.find(params[:id])
+    @user = current_user
     
     if @user.update(user_params)
       flash[:success] = 'ユーザを更新しました。'
@@ -38,7 +65,7 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    @user = User.find(params[:id])
+    @user = current_user
     @user.destroy
     
     flash[:success] = "ユーザーは正常に削除されました"

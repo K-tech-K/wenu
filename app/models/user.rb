@@ -16,4 +16,7 @@ class User < ApplicationRecord
     
     # password_digestセキュリティ用コード
     has_secure_password
+    
+    # Menuとの一対多関係を構築
+    has_many :menus
 end

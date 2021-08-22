@@ -1,0 +1,27 @@
+<%= form_with(model: menu) do |f| %>
+  <% if menu.errors.any? %>
+    <div id="error_explanation">
+      <ul class="mb-0">
+        <% menu.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3">
+    <%= f.label :content, 'メニュー名' %><%= f.text_field :content, class: 'form-control' %>
+  </div>
+
+  <div class="mb-3">
+    <%= f.label :price, '価格' %>
+    <%= f.number_field :price, class: 'form-control' %>
+  </div>
+  
+  <div class="mb-3">
+    <%= f.label :category, 'カテゴリ' %>
+    <%= f.select :category, [ ["Signature","Signature"],["Appetizer", "Appetizer"],["Main", "Main"],["Side", "Side"],["Bevarage", "Bevarage"] ], promt: "カテゴリを選択してください" , class: 'form-control' %>
+  </div>
+  
+  <%= f.submit 'Register', class: 'btn btn-primary' %>
+<% end %>
